@@ -2,8 +2,8 @@
 ### (pronounced '_')
 
 ## Developers
-Zachary Andruchowitz
-Adam Frederick
+Zachary Andruchowitz<br />
+Adam Frederick<br />
 K'drian Vega
 
 ### Kutztown University
