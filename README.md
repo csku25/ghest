@@ -1,5 +1,4 @@
 # ghest
-### (pronounced like 'jest')
 
 ## Developers
 Zachary Andruchowitz<br />
