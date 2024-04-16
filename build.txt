@@ -1,0 +1,13 @@
+K'drian Vega
+My build process on Mac for a C program:
+- brew install make cmake git gcc-arm-embedded libusb
+- git clone pico-sdk (and optionally pico-examples)
+- In pico-sdk, git submodule update --init (for btstack, tinyusb, etc)
+- Write program in C
+- mkdir build -> cd build
+- export PICO_SDK_PATH=<your pico-sdk path>
+- export PICO_BOARD=pico_w
+- cmake .. -> make
+- Raspberry Pico executable ends in .uf2
+- Hold down bootsel button and plug in Pico, should show up as storage device
+- Drag .uf2 file onto Pico, it will eject itself and run program
