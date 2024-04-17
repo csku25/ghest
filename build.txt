@@ -3,7 +3,8 @@ My build process on Mac for a C program:
 - brew install make cmake git gcc-arm-embedded libusb
 - git clone pico-sdk (and optionally pico-examples)
 - In pico-sdk, git submodule update --init (for btstack, tinyusb, etc)
-- Write program in C
+- Write program in C, make sure you include it in main.c
+- Compile and link <other>.c file with main.c configured by CMakeLists.txt
 - mkdir build -> cd build
 - export PICO_SDK_PATH=<your pico-sdk path>
 - export PICO_BOARD=pico_w
