@@ -161,6 +161,14 @@ class MPU6050(object):
             raise ValueError('Bad chip ID retrieved: MPU communication failure')
         return chip_id
 
+    #added by K'drian Vega 7/12/24
+    def get_accel(self):
+        return self._accel.xyz
+
+     #added by K'drian Vega 7/12/24
+    def get_gyro(self):
+        return self._gyro.xyz
+
     @property
     def sensors(self):
         '''
