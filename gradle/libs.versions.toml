@@ -1,6 +1,7 @@
 [versions]
 agp = "8.6.1"
 authenticator = "1.2.0"
+awsApi = "2.19.1"
 desugar_jdk_libs = "2.1.2"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
@@ -10,10 +11,12 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
 composeBom = "2024.04.01"
+generativeai = "0.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 authenticator = { module = "com.amplifyframework.ui:authenticator", version.ref = "authenticator" }
+aws-api = { module = "com.amplifyframework:aws-api", version.ref = "awsApi" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -28,6 +31,7 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

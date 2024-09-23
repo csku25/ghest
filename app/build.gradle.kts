@@ -51,8 +51,10 @@ android {
 }
 
 dependencies {
+    implementation(libs.generativeai)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
-    implementation("com.amplifyframework.ui:authenticator:1.2.0")
+
+    implementation(libs.aws.api)
     implementation(libs.authenticator)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
