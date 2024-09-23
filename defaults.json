@@ -1,0 +1,8 @@
+{
+    "left_swipe": "action1",
+    "right_swipe": "action2",
+    "up_swipe": "action3",
+    "down_swipe": "action4",
+    "single_tap": "action5",
+    "double_tap": "action6",
+}
