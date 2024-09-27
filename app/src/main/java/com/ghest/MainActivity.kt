@@ -54,7 +54,8 @@ class MainActivity : ComponentActivity() {
                             TodoList()
                             Button(onClick = {
                                 val todo = Todo.builder()
-                                    .content("USER {\n" +
+                                    .content("Test Data")
+                                            /*("USER {\n" +
                                             "Name: Adam Frederick\n" +
                                             "Email:afred574@live.kutztown.edu\n" +
                                             "DOB: \n" +
@@ -68,7 +69,7 @@ class MainActivity : ComponentActivity() {
                                             "MAC Address: \n" +
                                             "Registration Date: \n" +
                                             "IsSynced: False\n" +
-                                            "}\n")
+                                            "}\n")*/
                                     .build()
 
                                 Amplify.API.mutate(
