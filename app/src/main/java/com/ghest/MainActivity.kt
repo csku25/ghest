@@ -133,7 +133,6 @@ fun TodoList() {
     LazyColumn {
         items(todoList) { todo ->
             Row {
-                // Render your activity item here
                 Text(text = todo.content)
             }
         }
