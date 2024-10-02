@@ -20,14 +20,13 @@ void setup(void) {
     }
   }
 
-  Serial.println("MPU6050 initialized...");
+  Serial.println("MPU6050 initialized...\n");
 
-  // Configure settings
+  //configure sensor settings
   mpu.setAccelerometerRange(MPU6050_RANGE_2_G);  // Set accelerometer range to +/- 2g
   mpu.setGyroRange(MPU6050_RANGE_250_DEG);       // Set gyroscope range to +/- 250 deg/s
   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);    // Set filter bandwidth to 21 Hz
 
-  Serial.println("");
   delay(100);
 }
 
