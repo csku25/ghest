@@ -6,10 +6,11 @@ The Ghest system includes a Ghest bracelet and an app that allows for our guests
 ## Developers
 Zachary Andruchowitz : Raspberry Pi Program<br />
 Adam Frederick : Ghest Smartphone App<br />
+Jacob Vickers : Ghest Smartphone App<br />
 K'drian Vega : Circuitry & Design (Project Manager)<br />
 
 ## Project Details
 Kutztown University<br />
 Prof. Donna DeMarco<br />
 Software Engineering I & II<br />
-Jan 26, 2024 - Dec xx, 2024
+Jan 26, 2024 - Dec 14, 2024
