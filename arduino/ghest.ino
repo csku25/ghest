@@ -1,3 +1,12 @@
+/*
+  Project:    Ghest
+  Author(s):  K'drian Vega, Zachary Andruchowitz
+  Start date: Sept. 30, 2024
+
+  Used Libraries: Adafruit_MPU6050, Adafruit_Sensor
+  Credit to: Earle Philhower for Raspberry Pi Pico Arduino Core API - https://github.com/earlephilhower/arduino-pico
+*/
+
 #include <Wire.h>
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
@@ -10,7 +19,7 @@ void setup(void) {
   while (!Serial)
     delay(10); //wait for serial port to open on some boards
 
-  //set physical pico pins and init mpu
+  //set physical pico pins and initialize mpu
   Wire.setSDA(16);
   Wire.setSCL(17);
   if (!mpu.begin()) {
@@ -21,8 +30,7 @@ void setup(void) {
   }
 
   Serial.println("MPU6050 initialized...\n");
-
-  //configure sensor settings
+  //configure settings
   mpu.setAccelerometerRange(MPU6050_RANGE_2_G);  // Set accelerometer range to +/- 2g
   mpu.setGyroRange(MPU6050_RANGE_250_DEG);       // Set gyroscope range to +/- 250 deg/s
   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);    // Set filter bandwidth to 21 Hz
@@ -49,4 +57,3 @@ void loop() {
   //delay before the next reading
   delay(50); //in milliseconds
 }
-
