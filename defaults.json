@@ -1,8 +1,7 @@
 {
-    "left_swipe": "action1",
-    "right_swipe": "action2",
-    "up_swipe": "action3",
-    "down_swipe": "action4",
-    "single_tap": "action5",
-    "double_tap": "action6",
+    "left_swipe": "skip_back",
+    "right_swipe": "skip_forward",
+    "up_swipe": "volume_up",
+    "down_swipe": "volume_down",
+    "single_tap": "pause_play",
 }
