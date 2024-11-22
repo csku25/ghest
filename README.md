@@ -13,4 +13,4 @@ K'drian Vega : Circuitry & Design (Project Manager)<br />
 Kutztown University<br />
 Prof. Donna DeMarco<br />
 Software Engineering I & II<br />
-Jan 26, 2024 - Dec 14, 2024
+Jan 26, 2024 - Dec 6, 2024
