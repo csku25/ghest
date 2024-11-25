@@ -13,7 +13,7 @@
 #include <Adafruit_Sensor.h>
 #include <KeyboardBT.h>
 
-#define BUTTON 14
+#define BUTTON 20
 Adafruit_MPU6050 mpu;
 int count = 0;
 Statistic stats[3];
