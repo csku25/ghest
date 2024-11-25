@@ -16,7 +16,6 @@
 #include <LittleFS.h>
 
 #define BUTTON 20
-#define SIG_GHEST_APP "ghest_app_ready"
 Adafruit_MPU6050 mpu;
 bool is_paused = false;
 uint8_t debounce = 0;
@@ -24,14 +23,12 @@ uint8_t debounce_delay = 50;
 uint8_t button_state = HIGH;
 bool serial_on = true;  //toggle true/false to output serial
 bool mpu_flag = true;
-bool ble_flag = false;
 
 void deviceConnectedCallback(BLEStatus status, BLEDevice *device) {
   (void) device;
   switch (status) {
     case BLE_STATUS_OK:
-      Serial.println("BLE connected!");
-      ble_flag = true;
+      Serial.println("Device connected!");
       break;
     default:
       break;
@@ -40,14 +37,16 @@ void deviceConnectedCallback(BLEStatus status, BLEDevice *device) {
 
 void deviceDisconnectedCallback(BLEDevice * device) {
   (void) device;
-  Serial.println("BLE Disconnected.");
-  ble_flag = false;
+  Serial.println("Disconnected.");
 }
 
 int gattWriteCallback(uint16_t value_handle, uint8_t *buffer, uint16_t size) {
   (void) value_handle;
   char* msg = (char*) buffer;
   if (msg == NULL) return 1;
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(250);
+  digitalWrite(LED_BUILTIN, LOW);
   Serial.write(msg);
   return 0;
 }
@@ -71,11 +70,11 @@ void handle_file_stuff() {
 }
 
 void setup() {
-  if (serial_on) {
-    //start serial communication, baud rate 115,200
-    Serial.begin(115200);
-    while (!Serial);
-  }
+  // if (serial_on) {
+  //   //start serial communication, baud rate 115,200
+     Serial.begin(115200);
+  //   while (!Serial);
+  // }
 
   Wire.setSDA(16);
   Wire.setSCL(17);
@@ -87,7 +86,7 @@ void setup() {
 
   //set physical pico pins and initialize mpu
   pinMode(BUTTON, INPUT_PULLUP);
-  KeyboardBT.begin("Ghest Bracelet");
+  //KeyboardBT.begin("Ghest Bracelet");
 
   BTstack.setBLEDeviceConnectedCallback(deviceConnectedCallback);
   BTstack.setBLEDeviceDisconnectedCallback(deviceDisconnectedCallback);
@@ -95,19 +94,19 @@ void setup() {
 
   // setup GATT Database
   BTstack.addGATTService(new UUID("B8E06067-62AD-41BA-9231-206AE80AB550"));
-  BTstack.addGATTCharacteristic(new UUID("f897177b-aee8-4767-8ecc-cc694fd5fce1"), ATT_PROPERTY_READ | ATT_PROPERTY_WRITE, "For Custom Mappings");
+  BTstack.addGATTCharacteristicDynamic(new UUID("f897177b-aee8-4767-8ecc-cc694fd5fce1"), ATT_PROPERTY_READ | ATT_PROPERTY_WRITE, 0);
 
   // startup Bluetooth and activate advertisements
-  //BTstack.setup("Ghest Bracelet BLE");
-  //BTstack.startAdvertising();
+  BTstack.setup("Ghest Bracelet BLE");
+  BTstack.startAdvertising();
 
   LittleFS.begin();
   handle_file_stuff();
 
   //configure settings
-  mpu.setAccelerometerRange(mpu.getAccelerometerRange());
-  mpu.setGyroRange(mpu.getGyroRange());
-  mpu.setFilterBandwidth(mpu.getFilterBandwidth());
+  mpu.setAccelerometerRange(mpu.getAccelerometerRange());  // Set accelerometer range to +/- 2g
+  mpu.setGyroRange(mpu.getGyroRange());                    // Set gyroscope range to +/- 250 deg/s
+  mpu.setFilterBandwidth(mpu.getFilterBandwidth());        // Set filter bandwidth to 21 Hz
 
   delay(100);
   if (serial_on) Serial.println("ax,ay,az,gx,gy,gz");
@@ -116,8 +115,6 @@ void setup() {
 void loop() {
   BTstack.loop();
   if (!mpu_flag) exit(0);
-  if (ble_flag) KeyboardBT.end();
-
   uint8_t reading = digitalRead(BUTTON);
   if (reading != button_state) {
     debounce = millis();
@@ -138,7 +135,7 @@ void loop() {
   }
   button_state = reading;
 
-  if (!is_paused && !ble_flag) {
+  if (!is_paused) {
     //create sensor event objects for accelerometer, gyro, and temperature (discard it)
     sensors_event_t accel;
     sensors_event_t gyro;
@@ -147,6 +144,7 @@ void loop() {
     mpu.getEvent(&accel, &gyro, &discard);
     //discard temp readings
     //delay before the next reading
+    /*
     if (serial_on) {
       Serial.print("aX:");
       Serial.print(accel.acceleration.x);
@@ -166,27 +164,27 @@ void loop() {
       Serial.print("gZ:");
       Serial.print(gyro.gyro.z);
       Serial.println("");
-    }
+    }*/
     delay(50);  //in milliseconds
 
     if (abs(accel.acceleration.x) <= 1.75 && abs(accel.acceleration.y) <= 1.75 && accel.acceleration.z >= 8 && gyro.gyro.x < 0 && abs(gyro.gyro.y) >= 0.2 && abs(gyro.gyro.z >= 0.07)) {
-      KeyboardBT.consumerPress(KEY_PLAY_PAUSE);
-      KeyboardBT.consumerRelease();
+      //KeyboardBT.consumerPress(KEY_PLAY_PAUSE);
+      //KeyboardBT.consumerRelease();
       if (serial_on) Serial.println("Key pressed: PLAY/PAUSE");
       delay(1500);  //1.5-second buffer bewteen taps
     }
 
     if (!(accel.acceleration.z > 3) && accel.acceleration.y <= 7 && (gyro.gyro.z > -0.8 && gyro.gyro.z < 0.8)) {
       if (gyro.gyro.x <= -0.5 && gyro.gyro.y <= -0.5) {
-        KeyboardBT.consumerPress(KEY_SCAN_PREVIOUS);
-        KeyboardBT.consumerRelease();
+        //KeyboardBT.consumerPress(KEY_SCAN_PREVIOUS);
+        //KeyboardBT.consumerRelease();
         if (serial_on) Serial.println("Key pressed: SKIP BACK");
         delay(1000);  //1-second buffer bewteen gestures
       }
       
       else if (gyro.gyro.x >= 0.75 && gyro.gyro.y >= 0.75) {
-        KeyboardBT.consumerPress(KEY_SCAN_NEXT);
-        KeyboardBT.consumerRelease();
+        //KeyboardBT.consumerPress(KEY_SCAN_NEXT);
+        //KeyboardBT.consumerRelease();
         if (serial_on) Serial.println("Key pressed: SKIP FORWARD");
         delay(1000);  //1-second buffer bewteen gestures
       }
@@ -194,15 +192,15 @@ void loop() {
     
     else if (accel.acceleration.z >= 5.75 && (gyro.gyro.z > -0.5 && gyro.gyro.z < 0.5)) {
       if (gyro.gyro.x < -0.3 && gyro.gyro.y < -2) {
-        KeyboardBT.consumerPress(KEY_VOLUME_INCREMENT);
-        KeyboardBT.consumerRelease();
+        //KeyboardBT.consumerPress(KEY_VOLUME_INCREMENT);
+        //KeyboardBT.consumerRelease();
         if (serial_on) Serial.println("Key pressed: VOLUME UP");
         delay(1000);  //1-second buffer bewteen gestures
       }
       
       else if (gyro.gyro.x < -0.5 && gyro.gyro.y > 1.5) {
-        KeyboardBT.consumerPress(KEY_VOLUME_DECREMENT);
-        KeyboardBT.consumerRelease();
+        //KeyboardBT.consumerPress(KEY_VOLUME_DECREMENT);
+        //KeyboardBT.consumerRelease();
         if (serial_on) Serial.println("Key pressed: VOLUME DOWN");
         delay(1000);  //1-second buffer bewteen gestures
       }
