@@ -1,2 +1,0 @@
-- all files from prototype from CSC354 lives in this directory
-- depricated
