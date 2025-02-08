@@ -5,8 +5,8 @@ The Ghest system includes a Ghest bracelet and an app that allows for our guests
 
 ## Developers
 Zachary Andruchowitz : ML Model/Program<br />
-Adam Frederick : Ghest Smartphone App<br />
-Jacob Vickers : Ghest Smartphone App<br />
+Adam Frederick : Smartphone App Backend<br />
+Jacob Vickers : Smartphone App Frontend<br />
 K'drian Vega : Circuitry & Design (Project Manager)<br />
 
 ## Project Details
